@@ -1,5 +1,5 @@
 -- Flick.lua
--- Project Yoda Hub Flick Script with Starlight UI
+-- Project Yoda Hub Flick Script with WindUI
 -- Icon Asset ID: 107232731410445
 
 local Flick = {}
@@ -46,39 +46,39 @@ function Flick:Toggle(state)
 end
 
 ---------------------------------------------------
--- Starlight UI Integration
+-- WindUI Integration
 ---------------------------------------------------
-local FlickTab = Starlight:CreateWindow({
-    Title = "Flick Controls",
-    SubTitle = "Precision Aim Assist",
+local Window = WindUI:CreateWindow({
+    Title = "Project Yoda Hub",
+    SubTitle = "Flick Controls",
     TabWidth = 160,
     Size = UDim2.fromOffset(480, 300),
     FileSettings = {
         RootFolder = "ProjectYodaHub",
         ConfigFolder = "Configs",
     },
-}):CreateTab("Flick", "rbxassetid://107232731410445")
+})
 
-local FlickBox = FlickTab:CreateGroupbox({Name = "Flick Settings"}, "FlickBox")
+local FlickTab = Window:CreateTab("Flick", "rbxassetid://107232731410445")
+local FlickBox = FlickTab:CreateGroupbox("Flick Settings")
 
-FlickBox:CreateToggle({
-    Name = "Enable Flick",
-    CurrentValue = false,
+FlickBox:AddToggle("Enable Flick", {
+    Default = false,
     Callback = function(state)
         Flick:Toggle(state)
-    end,
-}, "FlickToggle")
+    end
+})
 
-FlickBox:CreateSlider({
-    Name = "Flick Speed",
-    Range = {0.05, 0.5},
-    Increment = 0.05,
-    CurrentValue = Flick.FlickSpeed,
+FlickBox:AddSlider("Flick Speed", {
+    Min = 0.05,
+    Max = 0.5,
+    Default = Flick.FlickSpeed,
+    Step = 0.05,
     Callback = function(value)
         Flick.FlickSpeed = value
         print("Flick Speed set to:", value)
-    end,
-}, "FlickSpeedSlider")
+    end
+})
 
 -- Bind flick to mouse click
 game:GetService("UserInputService").InputBegan:Connect(function(input, gp)
